@@ -53,7 +53,7 @@ test_data = test_data.dropna(how='any') # Null 값 제거
 
 mecab_dic_path = "C:/mecab/mecab-ko-dic" # 경로에 '/'를 사용
 mecab = Mecab(mecab_dic_path)
-print(mecab.morphs('회사는 업무를 하는 곳이기 때문에 개인적인 일을 시키면 안된다고 생각합니다.'))
+# print(mecab.morphs('회사는 업무를 하는 곳이기 때문에 개인적인 일을 시키면 안된다고 생각합니다.'))
 
 stopwords = ['도', '는', '다', '의', '가', '이', '은', '한', '에', '하', '고', '을', '를', '인', '듯', '과', '와', '네', '들', '듯', '지', '임', '게']
 
@@ -66,10 +66,10 @@ negative_words = np.hstack(train_data[train_data.label == 0]['tokenized'].values
 positive_words = np.hstack(train_data[train_data.label == 1]['tokenized'].values)
 
 negative_word_count = Counter(negative_words)
-print(negative_word_count.most_common(20))
+# print(negative_word_count.most_common(20))
 
 positive_word_count = Counter(positive_words)
-print(positive_word_count.most_common(20))
+# print(positive_word_count.most_common(20))
 
 fig,(ax1,ax2) = plt.subplots(1,2,figsize=(10,5))
 text_len = train_data[train_data['label']==1]['tokenized'].map(lambda x: len(x))
@@ -77,7 +77,7 @@ ax1.hist(text_len, color='red')
 ax1.set_title('Positive Reviews')
 ax1.set_xlabel('length of samples')
 ax1.set_ylabel('number of samples')
-print('긍정적인 답변의 평균 길이 :', np.mean(text_len))
+# print('긍정적인 답변의 평균 길이 :', np.mean(text_len))
 
 text_len = train_data[train_data['label']==0]['tokenized'].map(lambda x: len(x))
 ax2.hist(text_len, color='blue')
@@ -85,8 +85,8 @@ ax2.set_title('Negative Reviews')
 fig.suptitle('Words in texts')
 ax2.set_xlabel('length of samples')
 ax2.set_ylabel('number of samples')
-print('부정적인 답변의 평균 길이 :', np.mean(text_len))
-plt.show()
+# print('부정적인 답변의 평균 길이 :', np.mean(text_len))
+# plt.show()
 
 X_train = train_data['tokenized'].values
 y_train = train_data['label'].values
@@ -111,26 +111,26 @@ for key, value in tokenizer.word_counts.items():
         rare_cnt = rare_cnt + 1
         rare_freq = rare_freq + value
 
-print('단어 집합(vocabulary)의 크기 :',total_cnt)
-print('등장 빈도가 %s번 이하인 희귀 단어의 수: %s'%(threshold - 1, rare_cnt))
-print("단어 집합에서 희귀 단어의 비율:", (rare_cnt / total_cnt)*100)
-print("전체 등장 빈도에서 희귀 단어 등장 빈도 비율:", (rare_freq / total_freq)*100)
+# print('단어 집합(vocabulary)의 크기 :',total_cnt)
+# print('등장 빈도가 %s번 이하인 희귀 단어의 수: %s'%(threshold - 1, rare_cnt))
+# print("단어 집합에서 희귀 단어의 비율:", (rare_cnt / total_cnt)*100)
+# print("전체 등장 빈도에서 희귀 단어 등장 빈도 비율:", (rare_freq / total_freq)*100)
 
 # 전체 단어 개수 중 빈도수 2이하인 단어 개수는 제거.
 # 0번 패딩 토큰과 1번 OOV 토큰을 고려하여 +2
 vocab_size = total_cnt - rare_cnt + 2
-print('단어 집합의 크기 :',vocab_size)
+# print('단어 집합의 크기 :',vocab_size)
 
 tokenizer = Tokenizer(vocab_size, oov_token = 'OOV') 
 tokenizer.fit_on_texts(X_train)
 X_train = tokenizer.texts_to_sequences(X_train)
 X_test = tokenizer.texts_to_sequences(X_test)
 
-print(X_train[:3])
-print(X_test[:3])
+# print(X_train[:3])
+# print(X_test[:3])
 
-print('답변의 최대 길이 :',max(len(review) for review in X_train))
-print('답변의 평균 길이 :',sum(map(len, X_train))/len(X_train))
+# print('답변의 최대 길이 :',max(len(review) for review in X_train))
+# print('답변의 평균 길이 :',sum(map(len, X_train))/len(X_train))
 plt.hist([len(review) for review in X_train], bins=50)
 plt.xlabel('length of samples')
 plt.ylabel('number of samples')
