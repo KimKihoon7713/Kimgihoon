@@ -184,4 +184,4 @@ def sentiment_predict(new_sentence):
   else:
     print("{:.2f}% 확률로 부정적인 답변입니다.".format((1 - score) * 100))
 
-sentiment_predict('긍정적으로 생각하고 있습니다.')
+sentiment_predict('긍정적으로 생각하고 있습니다')
