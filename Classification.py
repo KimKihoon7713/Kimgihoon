@@ -21,7 +21,7 @@ total_data['label'] = np.select([total_data.ratings > 3], [1], default=0)
 
 total_data['ratings'].nunique(), total_data['reviews'].nunique(), total_data['label'].nunique()
 
-total_data.drop_duplicates(subset=['reviews'], inplace=True) # reviews 열에서 중복인 내용이 있다면 중복 제거
+total_data.drop_duplicates(subset=['reviews'], inplace=True) # reviews 열에서 중복되는 내용이 있다면 중복 제거
 '총 샘플의 수 :',len(total_data)
 
 total_data.isnull().values.any()
